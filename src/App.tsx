@@ -1,34 +1,32 @@
 import { useEffect, useState } from "react";
-import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { generateClient } from "aws-amplify/data";
+import type { Schema } from "../amplify/data/resource";
 
 const client = generateClient<Schema>();
 
 function App() {
-    const { signOut } = useAuthenticator();
-  const [employeeID, setEmployeeID] = useState('');
+    const { signOut, user } = useAuthenticator();
+    const [employeeID, setEmployeeID] = useState('');
     const [tasks, setTasks] = useState([]);
     const [editPopupVisible, setEditPopupVisible] = useState(false);
     const [popupContent, setPopupContent] = useState([]);
 
- const handleFetchTasks = (event) => {
-        // Conditionally check for event before using preventDefault
+    const handleFetchTasks = async (event) => {
         if (event) {
             event.preventDefault();
         }
 
-        fetch(`https://imf44ag3d4.execute-api.ap-south-1.amazonaws.com/S1/Test5?EmployeeID=${encodeURIComponent(employeeID)}`)
-            .then(response => response.text())
-            .then(data => {
-                const taskRows = parseTasksData(data);
-                setTasks(taskRows);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                setTasks([]);
-                alert('Error fetching data. Please try again later.');
-            });
+        try {
+            const response = await fetch(`https://imf44ag3d4.execute-api.ap-south-1.amazonaws.com/S1/Test5?EmployeeID=${encodeURIComponent(employeeID)}`);
+            const data = await response.text();
+            const taskRows = parseTasksData(data);
+            setTasks(taskRows);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setTasks([]);
+            alert('Error fetching data. Please try again later.');
+        }
     };
 
     const parseTasksData = (data) => {
@@ -61,7 +59,7 @@ function App() {
         setPopupContent(updatedTasks);
     };
 
-    const saveChanges = () => {
+    const saveChanges = async () => {
         const tasksData = popupContent.map(task => (
             `${task.employeeID},${task.taskDescription},${task.rate || ''},${task.remarks || ''}`
         ));
@@ -71,45 +69,40 @@ function App() {
             return;
         }
 
-        // Send data to the Lambda function as plain text
-        fetch('https://tfyct2zj8k.execute-api.ap-south-1.amazonaws.com/A1/test3', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: tasksData.join('\n') // Join tasks data with new lines
-        })
-        .then(response => {
+        try {
+            const response = await fetch('https://tfyct2zj8k.execute-api.ap-south-1.amazonaws.com/A1/test3', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: tasksData.join('\n') // Join tasks data with new lines
+            });
+
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
             }
-            return response.json();
-        })
-        .then(data => {
+
+            const data = await response.json();
             console.log('Success:', data);
             alert('Tasks updated successfully!');
             setEditPopupVisible(false); // Close the popup on success
             handleFetchTasks(); // Refresh tasks
-        })
-        .catch((error) => {
+        } catch (error) {
             console.error('Error:', error);
             alert('Failed to update tasks: ' + error.message);
-        });
+        }
     };
 
     const closePopup = () => {
         setEditPopupVisible(false);
     };
 
-  
-  return (
-   <div>
+    return (
+        <div>
             <header>
                 <img src="https://www.bharatbiotech.com/images/bharat-biotech-logo.jpg" alt="Company Logo" className="logo" />
-    		<>
-      			<h1>Hello {user.username}</h1>
-      			<button onClick={signOut}>Sign out</button>
-    		</>
+                <h1>Hello {user.username}</h1>
+                <button onClick={signOut}>Sign out</button>
             </header>
             <h1 style={{ textAlign: 'center' }}>Corporate Communications - Employee Task List</h1>
             <div className="container">
@@ -202,16 +195,14 @@ function App() {
                         </table>
                     </div>
                     <div>
-                    <button onClick={saveChanges}>Save</button> &nbsp;
-                    <button onClick={closePopup}>Close</button>
+                        <button onClick={saveChanges}>Save</button> &nbsp;
+                        <button onClick={closePopup}>Close</button>
                     </div>
                 </div>
             )}
             {editPopupVisible && <div className="overlay" onClick={closePopup}></div>}
         </div>
-            <button onClick={signOut}>Sign out</button>
-    </main>
-  );
+    );
 }
 
 export default App;
