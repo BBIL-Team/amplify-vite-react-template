@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 
-interface AppProps {
-    user: {
-        username: string;
-    };
-    signOut: () => void;
-}
-
-const App: React.FC<AppProps> = ({ user, signOut }) => {
+const App: React.FC<{ signOut: () => void; user: { username: string } }> = ({ user, signOut }) => {
     const [employeeID, setEmployeeID] = useState<string>('');
     const [tasks, setTasks] = useState<any[]>([]); // Update type as needed
 
