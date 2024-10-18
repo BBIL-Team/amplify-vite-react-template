@@ -11,12 +11,12 @@ interface Task {
     taskDescription: string;
     startDate: string;
     endDate: string;
-    rate: string;
+    rate: number; // Change to number
     remarks: string;
 }
 
 const App: React.FC = () => {
-    const { signOut, user } = useAuthenticator();
+    const { signOut, user } = useAuthenticator(); // Make sure you have user and signOut defined
     const [employeeID, setEmployeeID] = useState<string>('');
     const [tasks, setTasks] = useState<string[][]>([]);
     const [editPopupVisible, setEditPopupVisible] = useState<boolean>(false);
@@ -57,16 +57,16 @@ const App: React.FC = () => {
             taskDescription: task[2],
             startDate: task[3],
             endDate: task[4],
-            rate: task[5] || '',
+            rate: Number(task[5]) || 0, // Convert to number
             remarks: task[6] || ''
         }));
         setPopupContent(content);
         setEditPopupVisible(true);
     };
 
-    const handleChange = (index: number, field: keyof Task, value: string) => {
+    const handleChange = (index: number, field: keyof Task, value: string | number) => {
         const updatedTasks = [...popupContent];
-        updatedTasks[index][field] = value;
+        updatedTasks[index][field] = field === 'rate' ? Number(value) : value; // Convert rate to number
         setPopupContent(updatedTasks);
     };
 
