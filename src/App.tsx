@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { generateClient } from "aws-amplify/data";
-import type { Schema } from "../amplify/data/resource";
 
 const client = generateClient<Schema>();
 
@@ -11,12 +11,12 @@ interface Task {
     taskDescription: string;
     startDate: string;
     endDate: string;
-    rate: number; // Change to number
+    rate: number | string; // Allow string for controlled input
     remarks: string;
 }
 
 const App: React.FC = () => {
-    const { signOut, user } = useAuthenticator(); // Make sure you have user and signOut defined
+    const { signOut, user } = useAuthenticator();
     const [employeeID, setEmployeeID] = useState<string>('');
     const [tasks, setTasks] = useState<string[][]>([]);
     const [editPopupVisible, setEditPopupVisible] = useState<boolean>(false);
@@ -57,7 +57,7 @@ const App: React.FC = () => {
             taskDescription: task[2],
             startDate: task[3],
             endDate: task[4],
-            rate: Number(task[5]) || 0, // Convert to number
+            rate: task[5] || '', // Allow empty string
             remarks: task[6] || ''
         }));
         setPopupContent(content);
@@ -66,7 +66,7 @@ const App: React.FC = () => {
 
     const handleChange = (index: number, field: keyof Task, value: string | number) => {
         const updatedTasks = [...popupContent];
-        updatedTasks[index][field] = field === 'rate' ? Number(value) : value; // Convert rate to number
+        updatedTasks[index][field] = field === 'rate' ? Number(value) : value; // Ensure rate is a number
         setPopupContent(updatedTasks);
     };
 
@@ -216,4 +216,5 @@ const App: React.FC = () => {
         </div>
     );
 }
+
 export default App;
