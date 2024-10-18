@@ -10,8 +10,6 @@ interface AppProps {
 const App: React.FC<AppProps> = ({ user, signOut }) => {
     const [employeeID, setEmployeeID] = useState<string>('');
     const [tasks, setTasks] = useState<any[]>([]); // Update type as needed
-    const [editPopupVisible, setEditPopupVisible] = useState<boolean>(false);
-    const [popupContent, setPopupContent] = useState<any[]>([]); // Update type as needed
 
     const handleFetchTasks = (event: React.FormEvent<HTMLFormElement>) => {
         // Prevent form submission
