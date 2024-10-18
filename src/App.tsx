@@ -16,7 +16,11 @@ function App() {
   function createTodo() {
     client.models.Todo.create({ content: window.prompt("Todo content") });
   }
-
+  
+  function deleteTodo(id: string) {
+    client.models.Todo.delete({ id })
+  }
+  
   return (
     <main>
       <h1>My todos</h1>
