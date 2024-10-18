@@ -5,31 +5,42 @@ import type { Schema } from "../amplify/data/resource";
 
 const client = generateClient<Schema>();
 
-function App() {
-    const { signOut, user } = useAuthenticator();
-    const [employeeID, setEmployeeID] = useState('');
-    const [tasks, setTasks] = useState([]);
-    const [editPopupVisible, setEditPopupVisible] = useState(false);
-    const [popupContent, setPopupContent] = useState([]);
+interface Task {
+    employeeID: string;
+    employeeName: string;
+    taskDescription: string;
+    startDate: string;
+    endDate: string;
+    rate: string;
+    remarks: string;
+}
 
-    const handleFetchTasks = async (event) => {
+const App: React.FC = () => {
+    const { signOut, user } = useAuthenticator();
+    const [employeeID, setEmployeeID] = useState<string>('');
+    const [tasks, setTasks] = useState<string[][]>([]);
+    const [editPopupVisible, setEditPopupVisible] = useState<boolean>(false);
+    const [popupContent, setPopupContent] = useState<Task[]>([]);
+
+    const handleFetchTasks = (event: React.FormEvent<HTMLFormElement>) => {
         if (event) {
             event.preventDefault();
         }
 
-        try {
-            const response = await fetch(`https://imf44ag3d4.execute-api.ap-south-1.amazonaws.com/S1/Test5?EmployeeID=${encodeURIComponent(employeeID)}`);
-            const data = await response.text();
-            const taskRows = parseTasksData(data);
-            setTasks(taskRows);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setTasks([]);
-            alert('Error fetching data. Please try again later.');
-        }
+        fetch(`https://imf44ag3d4.execute-api.ap-south-1.amazonaws.com/S1/Test5?EmployeeID=${encodeURIComponent(employeeID)}`)
+            .then(response => response.text())
+            .then(data => {
+                const taskRows = parseTasksData(data);
+                setTasks(taskRows);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                setTasks([]);
+                alert('Error fetching data. Please try again later.');
+            });
     };
 
-    const parseTasksData = (data) => {
+    const parseTasksData = (data: string): string[][] => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, 'text/html');
         const rows = Array.from(doc.querySelectorAll('tr')).map(row => {
@@ -53,13 +64,13 @@ function App() {
         setEditPopupVisible(true);
     };
 
-    const handleChange = (index, field, value) => {
+    const handleChange = (index: number, field: keyof Task, value: string) => {
         const updatedTasks = [...popupContent];
         updatedTasks[index][field] = value;
         setPopupContent(updatedTasks);
     };
 
-    const saveChanges = async () => {
+    const saveChanges = () => {
         const tasksData = popupContent.map(task => (
             `${task.employeeID},${task.taskDescription},${task.rate || ''},${task.remarks || ''}`
         ));
@@ -69,28 +80,29 @@ function App() {
             return;
         }
 
-        try {
-            const response = await fetch('https://tfyct2zj8k.execute-api.ap-south-1.amazonaws.com/A1/test3', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'text/plain'
-                },
-                body: tasksData.join('\n') // Join tasks data with new lines
-            });
-
+        fetch('https://tfyct2zj8k.execute-api.ap-south-1.amazonaws.com/A1/test3', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: tasksData.join('\n') // Join tasks data with new lines
+        })
+        .then(response => {
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
             }
-
-            const data = await response.json();
+            return response.json();
+        })
+        .then(data => {
             console.log('Success:', data);
             alert('Tasks updated successfully!');
             setEditPopupVisible(false); // Close the popup on success
             handleFetchTasks(); // Refresh tasks
-        } catch (error) {
+        })
+        .catch((error) => {
             console.error('Error:', error);
             alert('Failed to update tasks: ' + error.message);
-        }
+        });
     };
 
     const closePopup = () => {
@@ -204,5 +216,4 @@ function App() {
         </div>
     );
 }
-
 export default App;
