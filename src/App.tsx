@@ -50,7 +50,7 @@ const EmployeeTaskList: React.FC = () => {
             taskDescription: task[2],
             startDate: task[3],
             endDate: task[4],
-            rate: task[5] || '',
+           rate: task[5] ? parseFloat(task[5]) : 0, // Convert the rate to a number
             remarks: task[6] || ''
         }));
         setPopupContent(content);
@@ -58,10 +58,14 @@ const EmployeeTaskList: React.FC = () => {
     };
 
     const handleChange = (index: number, field: keyof Task, value: string) => {
-        const updatedTasks = [...popupContent];
-        updatedTasks[index][field] = value;
-        setPopupContent(updatedTasks);
-    };
+    const updatedTasks = [...popupContent];
+
+    // Check if the field being updated is 'rate', convert it to a number
+    updatedTasks[index][field] = field === 'rate' ? Number(value) : value;
+
+    setPopupContent(updatedTasks);
+};
+
 
     const saveChanges = () => {
         const tasksData = popupContent.map(task => (
