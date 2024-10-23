@@ -58,7 +58,7 @@ const EmployeeTaskList: React.FC = () => {
         setEditPopupVisible(true);
     };
 
-    const handleChange = (index: number, field: keyof Task, value: string) => {
+    const handleChange = (index: string, field: keyof Task, value: string) => {
     const updatedTasks = [...popupContent];
 
             if (field === 'rate') {
