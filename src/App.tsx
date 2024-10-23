@@ -7,7 +7,7 @@ interface Task {
     taskDescription: string;
     startDate: string;
     endDate: string;
-    rate: number;
+    rate: string;
     remarks: string;
 }
 
