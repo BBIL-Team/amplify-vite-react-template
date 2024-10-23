@@ -17,8 +17,8 @@ const EmployeeTaskList: React.FC = () => {
     const [editPopupVisible, setEditPopupVisible] = useState<boolean>(false);
     const [popupContent, setPopupContent] = useState<Task[]>([]);
 
-    const handleFetchTasks = (event: FormEvent) => {
-        event.preventDefault();
+    const handleFetchTasks = (event?: FormEvent) => {
+        event?.preventDefault();
 
         fetch(`https://imf44ag3d4.execute-api.ap-south-1.amazonaws.com/S1/Test5?EmployeeID=${encodeURIComponent(employeeID)}`)
             .then(response => response.text())
@@ -191,7 +191,7 @@ const EmployeeTaskList: React.FC = () => {
                                         <td>{task.endDate}</td>
                                         <td>
                                             <input 
-                                                type="number" 
+                                                type="text" 
                                                 value={task.rate} 
                                                 min="1" 
                                                 max="5" 
