@@ -61,7 +61,7 @@ const EmployeeTaskList: React.FC = () => {
     const updatedTasks = [...popupContent];
 
     // Check if the field being updated is 'rate', convert it to a number
-    updatedTasks[index][field] = field === 'rate' ? Number(value) : value;
+    // updatedTasks[index][field] = field === 'rate' ? Number(value) : value;
 
     setPopupContent(updatedTasks);
 };
