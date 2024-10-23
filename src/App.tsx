@@ -50,16 +50,24 @@ const EmployeeTaskList: React.FC = () => {
             taskDescription: task[2],
             startDate: task[3],
             endDate: task[4],
-           rate: task[5] ? parseFloat(task[5]) : 0, // Convert the rate to a number
+          // rate: task[5] ? parseFloat(task[5]) : 0, // Convert the rate to a number
+            rate: task[5],
             remarks: task[6] || ''
         }));
         setPopupContent(content);
         setEditPopupVisible(true);
     };
 
-    //const handleChange = (index: number, field: keyof Task, value: string) => {
+    const handleChange = (index: number, field: keyof Task, value: string) => {
     const updatedTasks = [...popupContent];
 
+            if (field === 'rate') {
+        // Keep rate as a string
+        updatedTasks[index].rate = value;
+            } else {
+                updatedTasks[index][field] = value;
+            }
+        
     // Check if the field being updated is 'rate', convert it to a number
     // updatedTasks[index][field] = field === 'rate' ? Number(value) : value;
 
@@ -209,6 +217,5 @@ const EmployeeTaskList: React.FC = () => {
             {editPopupVisible && <div className="overlay" onClick={closePopup}></div>}
         </div>
     );
-//};
-
+};
 export default EmployeeTaskList;
