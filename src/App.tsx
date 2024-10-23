@@ -17,8 +17,8 @@ const EmployeeTaskList: React.FC = () => {
     const [editPopupVisible, setEditPopupVisible] = useState<boolean>(false);
     const [popupContent, setPopupContent] = useState<Task[]>([]);
 
-    const handleFetchTasks = (event?: FormEvent) => {
-        event?.preventDefault();
+    const handleFetchTasks = (event: FormEvent) => {
+        event.preventDefault();
 
         fetch(`https://imf44ag3d4.execute-api.ap-south-1.amazonaws.com/S1/Test5?EmployeeID=${encodeURIComponent(employeeID)}`)
             .then(response => response.text())
@@ -50,30 +50,18 @@ const EmployeeTaskList: React.FC = () => {
             taskDescription: task[2],
             startDate: task[3],
             endDate: task[4],
-          // rate: task[5] ? parseFloat(task[5]) : 0, // Convert the rate to a number
-            rate: task[5],
+            rate: task[5],  // Keep rate as string
             remarks: task[6] || ''
         }));
         setPopupContent(content);
         setEditPopupVisible(true);
     };
 
-    const handleChange = (index: string, field: keyof Task, value: string) => {
-    const updatedTasks = [...popupContent];
-
-            if (field === 'rate') {
-        // Keep rate as a string
-        updatedTasks[index].rate = value;
-            } else {
-                updatedTasks[index][field] = value;
-            }
-        
-    // Check if the field being updated is 'rate', convert it to a number
-    // updatedTasks[index][field] = field === 'rate' ? Number(value) : value;
-
-    setPopupContent(updatedTasks);
-};
-
+    const handleChange = (index: number, field: keyof Task, value: string) => {
+        const updatedTasks = [...popupContent];
+        updatedTasks[index][field] = value; // Keep all fields as strings
+        setPopupContent(updatedTasks);
+    };
 
     const saveChanges = () => {
         const tasksData = popupContent.map(task => (
@@ -192,9 +180,7 @@ const EmployeeTaskList: React.FC = () => {
                                         <td>
                                             <input 
                                                 type="text" 
-                                                value={task.rate} 
-                                                min="1" 
-                                                max="5" 
+                                                value={task.rate}  // Rate is now a string input
                                                 onChange={e => handleChange(index, 'rate', e.target.value)} 
                                             />
                                         </td>
@@ -218,4 +204,5 @@ const EmployeeTaskList: React.FC = () => {
         </div>
     );
 };
+
 export default EmployeeTaskList;
