@@ -74,7 +74,8 @@ const EmployeeTaskFetcher: React.FC = () => {
          <img src="https://www.bharatbiotech.com/images/bharat-biotech-logo.jpg" alt="Company Logo" className="logo" />
       </header>
 
-      <h1>Fetch Employee Tasks</h1>
+      <h1 style={{ textAlign: 'center' }}>Corporate Communications - Employee Task List</h1>
+      <div className="container">
       <form onSubmit={handleSubmit}>
         <label>
           Employee ID:
@@ -92,7 +93,7 @@ const EmployeeTaskFetcher: React.FC = () => {
 
       {/* Display the fetched tasks */}
       {tasks.length > 0 && (
-        <div>
+        <div id="cardContainer">
           <h2>Tasks for Employee {employeeId}</h2>
           <table>
             <thead>
