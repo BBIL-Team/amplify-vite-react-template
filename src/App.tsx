@@ -148,7 +148,15 @@ const EmployeeTaskFetcher: React.FC = () => {
                       <td>{task.taskDescription}</td>
                       <td>{task.startDate}</td>
                       <td>{task.endDate}</td>
-                      <td>{task.rate}</td>
+                      <td><input
+                          type="number" 
+                          value={task.rate} 
+                          min="1" 
+                          max="5" 
+                      onChange={e => handleChange(index, 'rate', e.target.value)} 
+                      />
+
+                    </td>
                       <td>{task.remarks}</td> {/* Corrected typo */}
                     </tr>
                   ))}
