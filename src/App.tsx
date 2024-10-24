@@ -156,17 +156,17 @@ const EmployeeTaskFetcher: React.FC = () => {
           </table>
           </div>
 
-            \\{popupContent.map((task, index) => (
-            \\<div key={index}>
-              \\<p>Employee ID: {task.employeeID}</p>
-              \\<p>Employee Name: {task.employeeName}</p>
-              \\<p>Task Description: {task.taskDescription}</p>
-              \\<p>Start Date: {task.startDate}</p>
-              \\<p>End Date: {task.endDate}</p>
-              \\<p>Rate: {task.rate}</p>
-              \\<p>Remarks: {task.remarks}</p>
-            \\</div>
-          \\))}
+            //{popupContent.map((task, index) => (
+            //<div key={index}>
+            //<p>Employee ID: {task.employeeID}</p>
+            //<p>Employee Name: {task.employeeName}</p>
+            //<p>Task Description: {task.taskDescription}</p>
+            //<p>Start Date: {task.startDate}</p>
+            //<p>End Date: {task.endDate}</p>
+            //<p>Rate: {task.rate}</p>
+            //<p>Remarks: {task.remarks}</p>
+            //</div>
+          //))}
           <button onClick={() => setEditPopupVisible(false)}>Close</button>
         </div>
       )}
