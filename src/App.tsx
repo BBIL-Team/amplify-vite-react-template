@@ -4,11 +4,8 @@ import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { generateClient } from "aws-amplify/data";
 
-const client = generateClient<Schema>();
-
 function App() {
     const { signOut } = useAuthenticator();
-const EmployeeTaskFetcher: React.FC = () => {
   const [employeeId, setEmployeeId] = useState('');
   const [tasks, setTasks] = useState<string[][]>([]); // 2D array for table rows and columns
   const [error, setError] = useState<string | null>(null);
