@@ -14,10 +14,10 @@ header {
 }
 
 .logo {
-     width: 150px;
-    height: 200px;
+    height: 120px;
     margin-right: 20px;
 }
+
 
 .container {
     max-width: 900px;
