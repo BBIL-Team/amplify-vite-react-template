@@ -31,7 +31,7 @@ const EmployeeTaskFetcher: React.FC = () => {
 
       // Parse the HTML response and extract tasks
       const taskRows = parseTasksFromHTML(data);
-      
+
       // Update the state with the parsed tasks
       setTasks(taskRows);
     } catch (error: any) {
@@ -71,106 +71,94 @@ const EmployeeTaskFetcher: React.FC = () => {
   return (
     <div>
       <header>
-         <img src="https://www.bharatbiotech.com/images/bharat-biotech-logo.jpg" alt="Company Logo" className="logo" />
+        <img src="https://www.bharatbiotech.com/images/bharat-biotech-logo.jpg" alt="Company Logo" className="logo" />
       </header>
 
       <h1 style={{ textAlign: 'center' }}>Corporate Communications - Employee Task List</h1>
       <div className="container">
-      <form onSubmit={handleSubmit}>
-        <label>
-          Employee ID:
-          <input
-            type="text"
-            value={employeeId}
-            onChange={(e) => setEmployeeId(e.target.value)}
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Employee ID:
+            <input
+              type="text"
+              value={employeeId}
+              onChange={(e) => setEmployeeId(e.target.value)}
+            />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
 
-      {/* Display error if there's one */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+        {/* Display error if there's one */}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {/* Display the fetched tasks */}
-      {tasks.length > 0 && (
-        <div id="cardContainer">
-          <h2>Tasks for Employee {employeeId}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Employee ID</th>
-                <th>Employee Name</th>
-                <th>Task Description</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Rate</th>
-                <th>Remarks</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tasks.map((task: string[], index: number) => (
-                <tr key={index}>
-                  {task.map((cell: string, cellIndex: number) => (
-                    <td key={cellIndex}>{cell}</td>
-                  ))}
+        {/* Display the fetched tasks */}
+        {tasks.length > 0 && (
+          <div id="cardContainer">
+            <h2>Tasks for Employee {employeeId}</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Employee ID</th>
+                  <th>Employee Name</th>
+                  <th>Task Description</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Rate</th>
+                  <th>Remarks</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {/* Edit Button */}
-      {tasks.length > 0 && <button onClick={showEditPopup}>Edit Tasks</button>}
-
-      {/* Display popup content */}
-      {editPopupVisible && (
-        <div className="popup">
-          <h2>Edit Tasks</h2>
-          <div id="popupContent">
-          <table border="1" style={{ width: '100%' }}>
-          <thead>
-            <tr>
-                <th>Employee ID</th>
-                <th>Employee Name</th>
-                <th>Task Description</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Rate</th>
-                <th>Remarks</th>
-            </tr>
-          </thead>
-            <tbody>
-               {popupContent.map((task, index) => (
-               <tr key={index}>
-                <td>{task.employeeID}</td>
-                <td>{task.employeeName}</td>
-                <td>{task.taskDescription}</td>
-                <td>{task.startDate}</td>
-                <td>{task.endDate}</td>
-                <td>{task.rate}</td>
-                <td>{task.remark}</td>
-                </tr>
-            ))}
-          </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {tasks.map((task: string[], index: number) => (
+                  <tr key={index}>
+                    {task.map((cell: string, cellIndex: number) => (
+                      <td key={cellIndex}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+        )}
 
-            //{popupContent.map((task, index) => (
-            //<div key={index}>
-            //<p>Employee ID: {task.employeeID}</p>
-            //<p>Employee Name: {task.employeeName}</p>
-            //<p>Task Description: {task.taskDescription}</p>
-            //<p>Start Date: {task.startDate}</p>
-            //<p>End Date: {task.endDate}</p>
-            //<p>Rate: {task.rate}</p>
-            //<p>Remarks: {task.remarks}</p>
-            //</div>
-          //))}
-          <button onClick={() => setEditPopupVisible(false)}>Close</button>
-        </div>
-      )}
-    </div>
+        {/* Edit Button */}
+        {tasks.length > 0 && <button onClick={showEditPopup}>Edit Tasks</button>}
+
+        {/* Display popup content */}
+        {editPopupVisible && (
+          <div className="popup">
+            <h2>Edit Tasks</h2>
+            <div id="popupContent">
+              <table border="1" style={{ width: '100%' }}>
+                <thead>
+                  <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Task Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Rate</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {popupContent.map((task, index) => (
+                    <tr key={index}>
+                      <td>{task.employeeID}</td>
+                      <td>{task.employeeName}</td>
+                      <td>{task.taskDescription}</td>
+                      <td>{task.startDate}</td>
+                      <td>{task.endDate}</td>
+                      <td>{task.rate}</td>
+                      <td>{task.remarks}</td> {/* Corrected typo */}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <button onClick={() => setEditPopupVisible(false)}>Close</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
