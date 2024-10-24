@@ -94,6 +94,9 @@ const EmployeeTaskFetcher: React.FC = () => {
           </table>
         </div>
       )}
+        {tasks.length > 0 && (
+        <button>Edit Tasks</button>
+        )}
     </div>
   );
 };
