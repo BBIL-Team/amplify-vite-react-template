@@ -76,7 +76,7 @@ const EmployeeTaskFetcher: React.FC = () => {
     setEditPopupVisible(true);
   };
 
-  const saveChanges = () => {
+ const saveChanges = () => {
   const tasksData = popupContent.map(task => (
     `${task.employeeID},${task.taskDescription},${task.rate || ''},${task.remarks || ''}`
   ));
@@ -104,13 +104,18 @@ const EmployeeTaskFetcher: React.FC = () => {
       console.log('Success:', data);
       alert('Tasks updated successfully!');
       setEditPopupVisible(false); // Close the popup on success
-      handleSubmit(new Event('submit')); // Refresh tasks after saving changes
+
+      // Instead of triggering a synthetic event, directly call handleSubmit logic
+      handleSubmit({
+        preventDefault: () => {}, // Mocking the preventDefault function since it's a form event
+      } as React.FormEvent);
     })
     .catch((error) => {
       console.error('Error:', error);
       alert('Failed to update tasks: ' + error.message);
     });
 };
+
 
   return (
     <div>
