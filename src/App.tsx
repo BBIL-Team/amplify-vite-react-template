@@ -162,10 +162,14 @@ const EmployeeTaskFetcher: React.FC = () => {
                           min="1" 
                           max="5" 
                       onChange={e => handleChange(index, 'rate', e.target.value)} 
+                      />\
+                      </td>
+                      <td><input 
+                          type="text" 
+                          value={task.remarks} 
+                          onChange={e => handleChange(index, 'remarks', e.target.value)} 
                       />
-
                     </td>
-                      <td>{task.remarks}</td> {/* Corrected typo */}
                     </tr>
                   ))}
                 </tbody>
