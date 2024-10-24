@@ -127,17 +127,46 @@ const EmployeeTaskFetcher: React.FC = () => {
       {editPopupVisible && (
         <div className="popup">
           <h2>Edit Tasks</h2>
-          {popupContent.map((task, index) => (
-            <div key={index}>
-              <p>Employee ID: {task.employeeID}</p>
-              <p>Employee Name: {task.employeeName}</p>
-              <p>Task Description: {task.taskDescription}</p>
-              <p>Start Date: {task.startDate}</p>
-              <p>End Date: {task.endDate}</p>
-              <p>Rate: {task.rate}</p>
-              <p>Remarks: {task.remarks}</p>
-            </div>
-          ))}
+          <div id="popupContent">
+          <table border="1" style={{ width: '100%' }}>
+          <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Task Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Rate</th>
+                <th>Remarks</th>
+            </tr>
+          </thead>
+            <tbody>
+               {popupContent.map((task, index) => (
+               <tr key={index}>
+                <td>{task.employeeID}</td>
+                <td>{task.employeeName}</td>
+                <td>{task.taskDescription}</td>
+                <td>{task.startDate}</td>
+                <td>{task.endDate}</td>
+                <td>{task.rate}</td>
+                <td>{task.remark}</td>
+                </tr>
+            ))}
+          </tbody>
+          </table>
+          </div>
+
+            \\{popupContent.map((task, index) => (
+            \\<div key={index}>
+              \\<p>Employee ID: {task.employeeID}</p>
+              \\<p>Employee Name: {task.employeeName}</p>
+              \\<p>Task Description: {task.taskDescription}</p>
+              \\<p>Start Date: {task.startDate}</p>
+              \\<p>End Date: {task.endDate}</p>
+              \\<p>Rate: {task.rate}</p>
+              \\<p>Remarks: {task.remarks}</p>
+            \\</div>
+          \\))}
           <button onClick={() => setEditPopupVisible(false)}>Close</button>
         </div>
       )}
