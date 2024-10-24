@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import './App.css'; // Import the CSS file
+import type { Schema } from "../amplify/data/resource";
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { generateClient } from "aws-amplify/data";
 
+const client = generateClient<Schema>();
+
+function App() {
+    const { signOut } = useAuthenticator();
 const EmployeeTaskFetcher: React.FC = () => {
   const [employeeId, setEmployeeId] = useState('');
   const [tasks, setTasks] = useState<string[][]>([]); // 2D array for table rows and columns
@@ -222,6 +229,7 @@ const EmployeeTaskFetcher: React.FC = () => {
           </div>
         )}
       </div>
+       <button onClick={signOut}>Sign out</button>
     </div>
   );
 };
