@@ -69,6 +69,19 @@ const parseTasksFromHTML = (html: string): string[] => {
       {tasks.length > 0 && (
         <div>
           <h2>Tasks for Employee {employeeId}</h2>
+          <table>
+            <thead>
+            <tr>
+              <th>Employee ID</th>
+              <th>Employee Name</th>
+              <th>Task Description</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Rate</th>
+              <th>Remarks</th>
+              </tr>
+            </thead>
+          </table>
           <ul>
             {tasks.map((task, index) => (
               <li key={index}>{task}</li>
