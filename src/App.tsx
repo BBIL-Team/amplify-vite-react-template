@@ -233,5 +233,5 @@ const EmployeeTaskFetcher: React.FC = () => {
     </div>
   );
 };
-
+};
 export default App;
