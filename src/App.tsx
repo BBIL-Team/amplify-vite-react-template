@@ -14,13 +14,7 @@ const EmployeeTaskFetcher: React.FC = () => {
 
     try {
       // Send employee ID to your Lambda API endpoint using fetch
-      const response = await fetch('https://aehcu90kr8.execute-api.ap-south-1.amazonaws.com/default/Test5', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ employeeID: employeeId }),
-      });
+      const response = await fetch('https://aehcu90kr8.execute-api.ap-south-1.amazonaws.com/default/Test5?EmployeeID=${encodeURIComponent(employeeID)}`)
 
       // Check if the request was successful
       if (!response.ok) {
