@@ -81,12 +81,12 @@ const parseTasksFromHTML = (html: string): string[] => {
               <th>Remarks</th>
               </tr>
             </thead>
-          </table>
-          <ul>
+            <tbody></tbody>
             {tasks.map((task, index) => (
               <li key={index}>{task}</li>
             ))}
-          </ul>
+          </tbody>
+          </table>
         </div>
       )}
     </div>
