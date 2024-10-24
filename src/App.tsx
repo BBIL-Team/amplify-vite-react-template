@@ -53,6 +53,14 @@ const EmployeeTaskFetcher: React.FC = () => {
     return rows.filter(row => row.length > 0); // Filter out empty rows
   };
 
+  // Function to handle the change in the popup inputs
+  const handleChange = (index: number, field: string, value: string) => {
+    const updatedContent = [...popupContent];
+    updatedContent[index] = { ...updatedContent[index], [field]: value };
+    setPopupContent(updatedContent);
+  };
+
+
   // Function to show the edit popup
   const showEditPopup = () => {
     const content = tasks.map(task => ({
