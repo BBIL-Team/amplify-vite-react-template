@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 const EmployeeTaskFetcher: React.FC = () => {
   const [employeeId, setEmployeeId] = useState('');
-  const [tasks, setTasks] = useState<string[]>([]);
+  //const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState<string[][]>([]);
   const [error, setError] = useState<string | null>(null);
 
   // This function will handle the form submission
@@ -81,9 +82,10 @@ const parseTasksFromHTML = (html: string): string[] => {
               <th>Remarks</th>
               </tr>
             </thead>
-            <tbody>{tasks.map((task, index) => (
+            <tbody>
+              {tasks.map((task: string[], index: number) => (
                 <tr key={index}>
-                  {task.map((cell, cellIndex) => (
+                  {task.map((cell: string, cellIndex: number) => (
                     <td key={cellIndex}>{cell}</td>
                   ))}
                 </tr>
