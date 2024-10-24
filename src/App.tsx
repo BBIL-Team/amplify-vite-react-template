@@ -69,6 +69,10 @@ const EmployeeTaskFetcher: React.FC = () => {
 
   return (
     <div>
+      <header>
+         <img src="https://www.bharatbiotech.com/images/bharat-biotech-logo.jpg" alt="Company Logo" className="logo" />
+      </header>
+
       <h1>Fetch Employee Tasks</h1>
       <form onSubmit={handleSubmit}>
         <label>
