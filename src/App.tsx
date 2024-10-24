@@ -4,6 +4,10 @@ const EmployeeTaskFetcher: React.FC = () => {
   const [employeeId, setEmployeeId] = useState('');
   const [tasks, setTasks] = useState<string[][]>([]); // 2D array for table rows and columns
   const [error, setError] = useState<string | null>(null);
+  const [popupContent, setPopupContent] = useState<
+    { employeeID: string; employeeName: string; taskDescription: string; startDate: string; endDate: string; rate: string; remarks: string }[]
+  >([]);
+  const [editPopupVisible, setEditPopupVisible] = useState(false);
 
   // This function will handle the form submission
   const handleSubmit = async (event: React.FormEvent) => {
@@ -48,20 +52,20 @@ const EmployeeTaskFetcher: React.FC = () => {
     return rows.filter(row => row.length > 0); // Filter out empty rows
   };
 
-    const showEditPopup = () => {
-        const content = tasks.map(task => ({
-            employeeID: task[0],
-            employeeName: task[1],
-            taskDescription: task[2],
-            startDate: task[3],
-            endDate: task[4],
-            rate: task[5] || '',
-            remarks: task[6] || ''
-        }));
-        setPopupContent(content);
-        setEditPopupVisible(true);
-    };
-
+  // Function to show the edit popup
+  const showEditPopup = () => {
+    const content = tasks.map(task => ({
+      employeeID: task[0],
+      employeeName: task[1],
+      taskDescription: task[2],
+      startDate: task[3],
+      endDate: task[4],
+      rate: task[5] || '',
+      remarks: task[6] || ''
+    }));
+    setPopupContent(content);
+    setEditPopupVisible(true);
+  };
 
   return (
     <div>
@@ -109,9 +113,28 @@ const EmployeeTaskFetcher: React.FC = () => {
           </table>
         </div>
       )}
-        {tasks.length > 0 && (
-        <button onClick={showEditPopup}>Edit Tasks</button>
-        )}
+
+      {/* Edit Button */}
+      {tasks.length > 0 && <button onClick={showEditPopup}>Edit Tasks</button>}
+
+      {/* Display popup content */}
+      {editPopupVisible && (
+        <div className="popup">
+          <h2>Edit Tasks</h2>
+          {popupContent.map((task, index) => (
+            <div key={index}>
+              <p>Employee ID: {task.employeeID}</p>
+              <p>Employee Name: {task.employeeName}</p>
+              <p>Task Description: {task.taskDescription}</p>
+              <p>Start Date: {task.startDate}</p>
+              <p>End Date: {task.endDate}</p>
+              <p>Rate: {task.rate}</p>
+              <p>Remarks: {task.remarks}</p>
+            </div>
+          ))}
+          <button onClick={() => setEditPopupVisible(false)}>Close</button>
+        </div>
+      )}
     </div>
   );
 };
