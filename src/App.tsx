@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './app.css';
 
 const EmployeeTaskFetcher: React.FC = () => {
   const [employeeId, setEmployeeId] = useState('');
