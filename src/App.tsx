@@ -142,6 +142,7 @@ const EmployeeTaskFetcher: React.FC = () => {
         </div>
       )}
     </div>
+    </div>
   );
 };
 
