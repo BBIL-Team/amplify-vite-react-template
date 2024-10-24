@@ -128,7 +128,7 @@ const EmployeeTaskFetcher: React.FC = () => {
           <div className="popup">
             <h2>Edit Tasks</h2>
             <div id="popupContent">
-              <table border="1" style={{ width: '100%' }}>
+              <table>
                 <thead>
                   <tr>
                     <th>Employee ID</th>
