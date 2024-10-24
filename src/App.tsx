@@ -20,14 +20,32 @@ const EmployeeTaskFetcher: React.FC = () => {
       // Check if the request was successful
       if (!response.ok) {throw new Error('Failed to fetch tasks');}
 
-      const data = await response.json();
+      //const data = await response.json();
+      const data = await response.text();
 
-      // Assuming your Lambda returns the tasks in data.tasks
-      setTasks(data.tasks || []);
-    } catch (error: any) {
-      setError(error.message || 'Error fetching tasks');
-    }
-  };
+      // Parse the HTML response
+    const taskRows = parseTasksFromHTML(data);
+    
+    // Update state with the parsed tasks
+    setTasks(taskRows);
+  } catch (error: any) {
+    setError(error.message || 'Error fetching tasks');
+  }
+};
+
+// Function to parse HTML response and extract tasks
+const parseTasksFromHTML = (html: string): string[] => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+
+  // Assuming the tasks are in <table> rows
+  const rows = Array.from(doc.querySelectorAll('tr')).map(row => {
+    const cells = Array.from(row.querySelectorAll('td'));
+    return cells.map(cell => cell.innerText).join(', '); // Join cells as a string
+  });
+
+  return rows.filter(row => row.length > 0); // Filter out empty rows
+};
 
   return (
     <div>
