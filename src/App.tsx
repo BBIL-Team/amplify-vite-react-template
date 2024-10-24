@@ -234,4 +234,4 @@ const EmployeeTaskFetcher: React.FC = () => {
   );
 };
 
-export default EmployeeTaskFetcher;
+export default App;
