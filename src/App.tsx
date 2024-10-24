@@ -48,6 +48,21 @@ const EmployeeTaskFetcher: React.FC = () => {
     return rows.filter(row => row.length > 0); // Filter out empty rows
   };
 
+    const showEditPopup = () => {
+        const content = tasks.map(task => ({
+            employeeID: task[0],
+            employeeName: task[1],
+            taskDescription: task[2],
+            startDate: task[3],
+            endDate: task[4],
+            rate: task[5] || '',
+            remarks: task[6] || ''
+        }));
+        setPopupContent(content);
+        setEditPopupVisible(true);
+    };
+
+
   return (
     <div>
       <h1>Fetch Employee Tasks</h1>
@@ -95,7 +110,7 @@ const EmployeeTaskFetcher: React.FC = () => {
         </div>
       )}
         {tasks.length > 0 && (
-        <button>Edit Tasks</button>
+        <button onClick={showEditPopup}>Edit Tasks</button>
         )}
     </div>
   );
