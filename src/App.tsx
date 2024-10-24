@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 
 const EmployeeTaskFetcher: React.FC = () => {
   const [employeeId, setEmployeeId] = useState('');
-  //const [tasks, setTasks] = useState<string[]>([]);
-  const [tasks, setTasks] = useState<string[][]>([]);
+  const [tasks, setTasks] = useState<string[][]>([]); // 2D array for table rows and columns
   const [error, setError] = useState<string | null>(null);
 
   // This function will handle the form submission
@@ -16,37 +15,38 @@ const EmployeeTaskFetcher: React.FC = () => {
     try {
       // Send employee ID to your Lambda API endpoint using fetch
       const response = await fetch(`https://aehcu90kr8.execute-api.ap-south-1.amazonaws.com/default/Test5?EmployeeID=${encodeURIComponent(employeeId)}`);
-      //const response = await fetch(`https://aehcu90kr8.execute-api.ap-south-1.amazonaws.com/default/Test5?EmployeeID=${encodeURIComponent(employeeId)}`);
 
       // Check if the request was successful
-      if (!response.ok) {throw new Error('Failed to fetch tasks');}
+      if (!response.ok) {
+        throw new Error('Failed to fetch tasks');
+      }
 
-      //const data = await response.json();
+      // Get the HTML response as a string
       const data = await response.text();
 
-      // Parse the HTML response
-    const taskRows = parseTasksFromHTML(data);
-    
-    // Update state with the parsed tasks
-    setTasks(taskRows);
-  } catch (error: any) {
-    setError(error.message || 'Error fetching tasks');
-  }
-};
+      // Parse the HTML response and extract tasks
+      const taskRows = parseTasksFromHTML(data);
+      
+      // Update the state with the parsed tasks
+      setTasks(taskRows);
+    } catch (error: any) {
+      setError(error.message || 'Error fetching tasks');
+    }
+  };
 
-// Function to parse HTML response and extract tasks
-const parseTasksFromHTML = (html: string): string[] => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
+  // Function to parse HTML response and extract tasks
+  const parseTasksFromHTML = (html: string): string[][] => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
 
-  // Assuming the tasks are in <table> rows
-  const rows = Array.from(doc.querySelectorAll('tr')).map(row => {
-    const cells = Array.from(row.querySelectorAll('td'));
-    return cells.map(cell => cell.innerText).join(', '); // Join cells as a string
-  });
+    // Assuming the tasks are in <table> rows, parse them into a 2D array
+    const rows = Array.from(doc.querySelectorAll('tr')).map(row => {
+      const cells = Array.from(row.querySelectorAll('td'));
+      return cells.map(cell => cell.innerText); // Return each cell's inner text as an array
+    });
 
-  return rows.filter(row => row.length > 0); // Filter out empty rows
-};
+    return rows.filter(row => row.length > 0); // Filter out empty rows
+  };
 
   return (
     <div>
@@ -72,14 +72,14 @@ const parseTasksFromHTML = (html: string): string[] => {
           <h2>Tasks for Employee {employeeId}</h2>
           <table>
             <thead>
-            <tr>
-              <th>Employee ID</th>
-              <th>Employee Name</th>
-              <th>Task Description</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Rate</th>
-              <th>Remarks</th>
+              <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Task Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Rate</th>
+                <th>Remarks</th>
               </tr>
             </thead>
             <tbody>
