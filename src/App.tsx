@@ -77,41 +77,40 @@ const EmployeeTaskFetcher: React.FC = () => {
   };
 
   const saveChanges = () => {
-        const tasksData = popupContent.map(task => (
-            `${task.employeeID},${task.taskDescription},${task.rate || ''},${task.remarks || ''}`
-        ));
+  const tasksData = popupContent.map(task => (
+    `${task.employeeID},${task.taskDescription},${task.rate || ''},${task.remarks || ''}`
+  ));
 
-        if (tasksData.length === 0) {
-            alert("No tasks to save.");
-            return;
-        }
+  if (tasksData.length === 0) {
+    alert("No tasks to save.");
+    return;
+  }
 
-        // Send data to the Lambda function as plain text
-        fetch('https://tfyct2zj8k.execute-api.ap-south-1.amazonaws.com/A1/test3', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: tasksData.join('\n') // Join tasks data with new lines
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-            alert('Tasks updated successfully!');
-            setEditPopupVisible(false); // Close the popup on success
-            handleFetchTasks(); // Refresh tasks
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('Failed to update tasks: ' + error.message);
-        });
-    };
-
+  // Send data to the Lambda function as plain text
+  fetch('https://tfyct2zj8k.execute-api.ap-south-1.amazonaws.com/A1/test3', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain'
+    },
+    body: tasksData.join('\n') // Join tasks data with new lines
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Success:', data);
+      alert('Tasks updated successfully!');
+      setEditPopupVisible(false); // Close the popup on success
+      handleSubmit(new Event('submit')); // Refresh tasks after saving changes
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('Failed to update tasks: ' + error.message);
+    });
+};
 
   return (
     <div>
@@ -212,7 +211,8 @@ const EmployeeTaskFetcher: React.FC = () => {
                 </tbody>
               </table>
             </div>
-            <button onclick=(saveChanges)>Save</button>
+            {/* Save button */}
+            <button onClick={saveChanges}>Save</button>
             <button onClick={() => setEditPopupVisible(false)}>Close</button>
           </div>
         )}
