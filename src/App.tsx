@@ -14,7 +14,7 @@ const EmployeeTaskFetcher: React.FC = () => {
 
     try {
       // Send employee ID to your Lambda API endpoint using fetch
-      const response = await fetch('YOUR_LAMBDA_API_ENDPOINT', {
+      const response = await fetch('https://imf44ag3d4.execute-api.ap-south-1.amazonaws.com/S1/Test5', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
