@@ -120,7 +120,7 @@ function App() {
 
 
   return (
-    <div style={{ height: '720px', display: 'flex', flexDirection: 'column', padding: '10', width: '80vw', margin: '0 auto', boxSizing: 'border-box' }}>
+    <div style={{ height: '720px', display: 'flex', flexDirection: 'column', padding: '10', width: '80vw', margin: '0 auto', background-color: '#e2e2e2', boxSizing: 'border-box' }}>
       <header>
         <img src="https://www.bharatbiotech.com/images/bharat-biotech-logo.jpg" alt="Company Logo" className="logo" />
       </header>
