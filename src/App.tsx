@@ -120,20 +120,7 @@ function App() {
 
 
   return (
-   //<div style={{ top: '0', display: 'flex', flexDirection: 'column', padding: '0', width: '90vw', margin: '0', boxSizing: 'border-box', backgroundColor: '#E2E2E2', position: 'fixed',left: '50%'}}>
-      <div style={{
-    top: '0',
-    left: '50%',
-    transform: 'translateX(-50%)', // Centers the div horizontally
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '0',
-    width: '90vw',
-    margin: '0',
-    boxSizing: 'border-box',
-    backgroundColor: '#E2E2E2',
-    position: 'fixed'
-}}>
+   <div style={{ top: '0', display: 'flex', flexDirection: 'column', padding: '0', width: '90vw', margin: '0', boxSizing: 'border-box', backgroundColor: '#E2E2E2', position: 'fixed',left: '50%',transform: 'translateX(-50%)',height: '100px'}}>
       <header>
         <img src="https://www.bharatbiotech.com/images/bharat-biotech-logo.jpg" alt="Company Logo" className="logo" />
          <button style={{ marginLeft: 'auto' }} onClick={signOut}>Sign out</button>
