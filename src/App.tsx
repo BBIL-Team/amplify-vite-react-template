@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './App.css'; // Import the CSS file
-import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { generateClient } from "aws-amplify/data";
 
 function App() {
     const { signOut } = useAuthenticator();
