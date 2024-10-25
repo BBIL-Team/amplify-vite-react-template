@@ -120,7 +120,7 @@ function App() {
 
 
   return (
-   <div style={{ top: '0', display: 'flex', flexDirection: 'column', padding: '0', width: '90vw', margin: '0', boxSizing: 'border-box', backgroundColor: '#E2E2E2', position: 'relative',alignitems: 'center' }}>
+   <div style={{ top: '0', display: 'flex', flexDirection: 'column', padding: '0', width: '90vw', margin: '0', boxSizing: 'border-box', backgroundColor: '#E2E2E2', position: 'relative',alignItems: 'center' }}>
       <header>
         <img src="https://www.bharatbiotech.com/images/bharat-biotech-logo.jpg" alt="Company Logo" className="logo" />
          <button style={{ marginLeft: 'auto' }} onClick={signOut}>Sign out</button>
