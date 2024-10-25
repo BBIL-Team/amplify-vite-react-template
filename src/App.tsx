@@ -224,8 +224,9 @@ function App() {
           </div>
         )}
       </div>
-       <button style={{ marginLeft: 'auto' }} onClick={signOut}>Sign out</button>
+       //<button style={{ marginLeft: 'auto' }} onClick={signOut}>Sign out</button>
     </div>
+    <button style={{ marginLeft: 'auto' }} onClick={signOut}>Sign out</button>
   );
 };
 export default App;
